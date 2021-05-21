@@ -14,14 +14,25 @@ import style from 'styled-components'
 
 const StyledDiv = style.div`
  width:100%;
- a{
+ 
+ img{
+  width:100%;
+  height:50vh;
+ }
+
+ nav{
+  margin:1% 1% 1% auto;
+  width:10%;
+}
+ nav a{
   text-decoration: none;
+  color: black;
+  border:1px solid black;
+  padding: 2% 5% 2% 5%;
  }
  h1{
    padding:.5%;
  }
- 
-
  `
 
 
@@ -120,18 +131,18 @@ useEffect(() =>{
       <h1>Lambda Eats</h1>
       <nav>
         <Link to='/'>Home</Link>
-        <Link to='/#'>Help</Link>
+        <Link to='/'>Help</Link>
       </nav>
     {/* Routes */}
-    <Switch>
-      <Route path='/pizza/confirmation' render={props =>{
-        return <Confirmation />
-      }}/>
-      <Route path='/pizza' render={props => {
-        return <Form values ={formValues} update={change} submit={submit} errors={formErrors} disabled={disabled} />
-      }}/>
-      <Route path='/' component={Home} />
-    </Switch>
+      <Switch>
+        <Route path='/pizza/confirmation' render={props =>{
+          return <Confirmation />
+        }}/>
+        <Route path='/pizza' render={props => {
+          return <Form values ={formValues} update={change} submit={submit} errors={formErrors} disabled={disabled} />
+        }}/>
+        <Route path='/' component={Home} />
+      </Switch>
     </StyledDiv>
   );
 };
