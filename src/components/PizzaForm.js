@@ -6,7 +6,7 @@ import Pizza from '../Assets/Pizza.jpg'
 import style from 'styled-components'
 const StyledDiv = style.div`
 width:60%;
-margin:0 auto;
+margin:2% auto;
 border:2px solid black;
 display:flex;
 flex-direction:column;
