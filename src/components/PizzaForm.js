@@ -1,11 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 //Pizza photo
 import Pizza from '../Assets/Pizza.jpg'
 
 
 export default function Form(props){
     const { values,update,submit,disabled,errors} = props
-
+    
     const onChange = (e) =>{
         const { name, value,type,checked} = e.target
         const valueToUse = type === 'checkbox'? checked : value
@@ -20,9 +21,9 @@ export default function Form(props){
     return(
         <div>
             <form id='order-pizza' onSubmit={onSubmit}>
-                <img src={Pizza} />
+                <img src={Pizza} alt="pizza" />
                 <h2>Build Your Own Pizza</h2>
-                <label> Making the Order to Who?
+                <label> Making the Order to Who? 
                     <input 
                     id='name-input'
                     name='name'
@@ -40,7 +41,7 @@ export default function Form(props){
                     </select>
                 </label>
                 <label> Choice of Sauce 
-                  <label>  <input type ='radio' name='sauce' onChange={onChange} value='originalRed' checked={values.sauce === 'originalRed'}/> Original Red </label>
+                  <label>  <input type ='radio' data-test='radio' name='sauce' onChange={onChange} value='originalRed' checked={values.sauce === 'originalRed'}/> Original Red </label>
                    <label> <input type ='radio' name='sauce' onChange={onChange} value='garlicRanch' checked={values.sauce === 'garlicRanch'} />Garlic Ranch</label>
                    <label> <input type ='radio' name='sauce' onChange={onChange} value='bbqSauce' checked={values.sauce === 'bbqSauce'} /> BBQ Sauce</label>
                    <label> <input type ='radio' name='sauce' onChange={onChange} value='spinachAlfredo' checked={values.sauce === 'spinachAlfredo'} />Spinach Alfredo</label>
@@ -70,8 +71,16 @@ export default function Form(props){
                 <label>Special Instructions
                     <input id='special-text' type='text' name='special' value={values.special} onChange={onChange} />
                 </label>
-                {/* adding more than one */}
-                <button id='order-button' disabled={disabled}>Add to Order</button>
+                {/* Errors */}
+                <div className='errors'>
+                    <div>{errors.name}</div>
+                    <div>{errors.sauce}</div>
+                    <div>{errors.size}</div>
+                    <div>{errors.topping}</div>
+                    <div>{errors.special}</div>
+                </div> 
+                
+                <button id='order-button' disabled={disabled}>Add to Order</button> <Link to='/pizza/confirmation'>Continue</Link>
             </form>
         </div>
     );

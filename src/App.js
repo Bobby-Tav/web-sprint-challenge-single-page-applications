@@ -1,10 +1,29 @@
 
 import React, {useEffect,useState} from 'react';
 import{Route,Link,Switch} from 'react-router-dom'
+//Components
 import Home from './components/Home'
 import Form from './components/PizzaForm'
+import Confirmation from './components/Confirmation'
+//Validations
 import schema from './validation/schema';
 import * as yup from 'yup'
+
+//Styling
+import style from 'styled-components'
+
+const StyledDiv = style.div`
+ width:100%;
+ a{
+  text-decoration: none;
+ }
+ h1{
+   padding:.5%;
+ }
+ 
+
+ `
+
 
 //Initial States
 const initialFormValues ={
@@ -40,6 +59,7 @@ const initialPizzas = []
 const initialDisabled = true
 
 const App = () => {
+  //States
   const [pizza,setPizza] = useState(initialPizzas)
   const [formValues,setFormValues] = useState(initialFormValues)
   const [formErrors,setFormErrors] = useState(initialFormErrors)
@@ -66,20 +86,21 @@ const validate = (name, value) => {
       sub: formValues.sub,
       special: formValues.special,
       toppings: ['pepperoni','sausage','canadianBacon','spicyItalianSausage','grilledChicken','onions','greenPepper','dicedTomatoes','blackOlives','artichokeHearts','threeCheese','roastedGarlic','pineapple','extraCheese'].filter(topping => formValues[topping]),
-    pepperoni: formValues.pepperoni,
-    sausage: formValues.sausage,
-    canadianBacon: formValues.canadianBacon,
-    spicyItalianSausage: formValues.spicyItalianSausage,
-    grilledChicken: formValues.grilledChicken,
-    onions: formValues.onions,
-    greenPepper: formValues.greenPepper,
-    dicedTomatoes: formValues.dicedTomatoes,
-    blackOlives: formValues.blackOlives,
-    artichokeHearts: formValues.artichokeHearts,
-    threeCheese: formValues.threeCheese,
-    roastedGarlic: formValues.roastedGarlic,
-    pineapple: formValues.pineapple,
-    extraCheese: formValues.extraCheese,
+      //Topping as Booleans
+      pepperoni: formValues.pepperoni,
+      sausage: formValues.sausage,
+      canadianBacon: formValues.canadianBacon,
+      spicyItalianSausage: formValues.spicyItalianSausage,
+      grilledChicken: formValues.grilledChicken,
+      onions: formValues.onions,
+      greenPepper: formValues.greenPepper,
+      dicedTomatoes: formValues.dicedTomatoes,
+      blackOlives: formValues.blackOlives,
+      artichokeHearts: formValues.artichokeHearts,
+      threeCheese: formValues.threeCheese,
+      roastedGarlic: formValues.roastedGarlic,
+      pineapple: formValues.pineapple,
+      extraCheese: formValues.extraCheese,
     }
     setPizza([ ...pizza, newPizza])
     setFormValues(initialFormValues)
@@ -91,8 +112,11 @@ const validate = (name, value) => {
 useEffect(() =>{
   schema.isValid(formValues).then(valid => setDisabled(!valid))
 },[formValues])
+
+
+//--------return--------
   return (
-    <div>
+    <StyledDiv>
       <h1>Lambda Eats</h1>
       <nav>
         <Link to='/'>Home</Link>
@@ -100,12 +124,15 @@ useEffect(() =>{
       </nav>
     {/* Routes */}
     <Switch>
-    <Route path='/pizza' render={props => {
-      return <Form values ={formValues} update={change} submit={submit} error={formErrors} disabled={disabled} />
-    }}/>
-    <Route path='/' component={Home} />
+      <Route path='/pizza/confirmation' render={props =>{
+        return <Confirmation />
+      }}/>
+      <Route path='/pizza' render={props => {
+        return <Form values ={formValues} update={change} submit={submit} errors={formErrors} disabled={disabled} />
+      }}/>
+      <Route path='/' component={Home} />
     </Switch>
-    </div>
+    </StyledDiv>
   );
 };
 export default App;
